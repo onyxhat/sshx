@@ -7,11 +7,10 @@
     RefreshCwIcon,
     Share2Icon,
   } from "svelte-feather-icons";
-
   import logotypeDark from "$lib/assets/logotype-dark.svg";
   import landingGraphic from "$lib/assets/landing-graphic.svg";
   import landingBackground from "$lib/assets/landing-background.svg";
-  import TeaserImage from "$lib/ui/TeaserImage.svelte";
+  import { onMount } from "svelte";
 
   let installationEl: HTMLDivElement;
 
@@ -46,10 +45,9 @@
   ];
 
   let selectedInstall = installs[0];
+  let url = ``;
 
-  function scrollToInstallation() {
-    installationEl.scrollIntoView({ behavior: "smooth" });
-  }
+  onMount(() => url = window.location.href);
 </script>
 
 <div class="overflow-x-hidden absolute inset-0">
@@ -79,7 +77,7 @@
       </div>
     </div>
 
-    <section class="my-12 space-y-6 text-lg md:max-w-[460px] text-zinc-400">
+    <section class="my-12 space-y-6 text-lg md:max-w-[460px] text-gray-400">
       <p>
         <code>sshx</code> lets you share your terminal with anyone by link, on a
         <b>multiplayer infinite canvas</b>.
@@ -98,7 +96,7 @@
     <div class="pb-12 md:pb-36">
       <button
         class="bg-pink-700 hover:bg-pink-600 active:ring-4 active:ring-pink-500/50 text-lg font-semibold px-8 py-2 rounded-full"
-        on:click={scrollToInstallation}
+        on:click={() => installationEl.scrollIntoView({ behavior: "smooth" })}
       >
         Get Started
       </button>
@@ -158,45 +156,49 @@
       </div>
     </div>
 
-    <div class="my-48 hidden md:block">
-      <TeaserImage />
-    </div>
-
     <h2 bind:this={installationEl} class="mt-40 mb-16">
       Get started in <span class="title-gradient">two quick steps</span>
     </h2>
 
     <div
-      class="mx-auto max-w-screen-lg grid lg:grid-cols-2 gap-16 lg:text-center mb-12 text-lg text-zinc-300"
+      class="mx-auto max-w-screen-lg grid lg:grid-cols-2 gap-16 lg:text-center mb-12 text-lg text-gray-300"
     >
       <div class="space-y-6">
         <h3 class="step-heading">
           <span class="pill mr-3">1</span> Install the CLI
         </h3>
-        <p class="text-zinc-400">
-          Get <code>sshx</code> by running this command. It's tiny and downloads
-          in seconds (3 MB).
+        <p class="text-gray-400">
+          Get the <code>sshx</code> CLI by running this in your terminal. It's tiny
+          and downloads in seconds (3 MB).
         </p>
         <div class="flex flex-col items-start text-base">
-          <div class="flex rounded-t text-sm bg-zinc-900">
+          <div class="flex rounded-t text-sm bg-gray-900">
+<!--
             {#each installs as method}
               <button
-                class="px-2 py-1 border-l border-t last:border-r border-zinc-500 first:rounded-tl last:rounded-tr"
-                class:bg-zinc-700={selectedInstall === method}
+                class="px-2 py-1 border-l border-t last:border-r border-gray-500 first:rounded-tl last:rounded-tr"
+                class:bg-gray-700={selectedInstall === method}
                 on:click={() => (selectedInstall = method)}
               >
                 {method.title}
               </button>
             {/each}
+            -->
+            <button
+            class="px-2 py-1 border-l border-t last:border-r border-gray-500 first:rounded-tl last:rounded-tr"
+          >
+            macOS / Linux
+          </button>
+
           </div>
-          <pre class="rounded-b rounded-r w-full">{selectedInstall.steps}</pre>
+          <pre class="rounded-b rounded-r w-full">curl -sSf {url}get | sh</pre>
         </div>
 
-        <p class="text-zinc-400">
+        <p class="text-gray-400">
           You can also build it <a
             target="_blank"
             rel="noreferrer"
-            class="underline underline-offset-2 text-zinc-300"
+            class="underline underline-offset-2 text-gray-300"
             href="https://github.com/ekzhang/sshx">from source</a
           >, if you'd like.
         </p>
@@ -206,11 +208,11 @@
           <span class="pill mr-3">2</span> Share your terminal
         </h3>
 
-        <p class="text-zinc-400">Run this command in your favorite terminal.</p>
+        <p class="text-gray-400">Run this command in your favorite terminal.</p>
 
         <pre class="rounded">sshx</pre>
 
-        <p class="text-zinc-400">
+        <p class="text-gray-400">
           This kicks off a live, encrypted session. Open the link in your web
           browser to join.
         </p>
@@ -225,14 +227,14 @@
           target="_blank"
           rel="noreferrer"
           href={social.href}
-          class="border border-zinc-700 hover:bg-zinc-900 transition-colors p-4 text-center text-lg font-medium rounded-lg"
+          class="border border-gray-700 hover:bg-gray-900 transition-colors p-4 text-center text-lg font-medium rounded-lg"
         >
           {social.title}
         </a>
       {/each}
     </div>
 
-    <p class="mb-12 text-center text-zinc-400">
+    <p class="mb-12 text-center text-gray-400">
       open source, &copy; Eric Zhang 2023
     </p>
   </main>
@@ -249,19 +251,19 @@
   }
 
   b {
-    @apply text-zinc-300 font-semibold;
+    @apply text-gray-300 font-semibold;
   }
 
   code {
-    @apply text-[0.9em] text-zinc-200 font-medium bg-zinc-700 px-1 py-0.5 rounded;
+    @apply text-[0.9em] text-gray-200 font-medium bg-gray-700 px-1 py-0.5 rounded;
   }
 
   pre {
-    @apply bg-zinc-900 p-3 whitespace-pre-wrap border border-zinc-500;
+    @apply bg-gray-900 p-3 whitespace-pre-wrap border border-gray-500;
   }
 
   hr {
-    @apply mx-auto md:w-1/2 border-zinc-800;
+    @apply mx-auto md:w-1/2 border-gray-800;
   }
 
   .title-gradient {
@@ -300,15 +302,15 @@
   }
 
   .feature-block p {
-    @apply text-zinc-400;
+    @apply text-gray-400;
   }
 
   .feature-icon {
-    @apply inline-block p-3 rounded-full mb-3 shadow-md border border-zinc-600;
+    @apply inline-block p-3 rounded-full mb-3 shadow-md border border-gray-600;
   }
 
   .step-heading {
-    @apply text-2xl text-zinc-200 font-semibold flex items-center md:justify-center;
+    @apply text-2xl text-gray-200 font-semibold flex items-center md:justify-center;
   }
 
   .pill {
